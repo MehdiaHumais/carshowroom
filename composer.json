@@ -1,0 +1,11 @@
+{
+  "name": "mehdia/car-showroom-plugin",
+  "autoload": {
+    "psr-4": {
+      "CarShowroom\\": "src/"
+    }
+  },
+  "require": {
+    "nesbot/carbon": "^2.0"
+  }
+}
