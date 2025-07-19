@@ -1,45 +1,17 @@
-<?php
+<?php get_header(); ?>
 
-use Carbon\Carbon;
+<div class="car-single">
+    <?php while (have_posts()) : the_post(); ?>
+        <h1><?php the_title(); ?></h1>
+        <div><?php the_post_thumbnail('large'); ?></div>
+        <p><strong>Price:</strong> <?php echo get_post_meta(get_the_ID(), 'price', true); ?></p>
+        <p><strong>Mileage:</strong> <?php echo get_post_meta(get_the_ID(), 'mileage', true); ?></p>
+        <p><strong>Condition:</strong> <?php echo get_post_meta(get_the_ID(), 'condition', true); ?></p>
+        <p><strong>Owner:</strong> <?php echo get_post_meta(get_the_ID(), 'owner_name', true); ?> (<?php echo get_post_meta(get_the_ID(), 'owner_phone', true); ?>)</p>
+        <p><strong>Posted:</strong> <?php echo human_time_diff(get_the_time('U'), current_time('timestamp')) . ' ago'; ?></p>
 
-get_header();
-
-// Get car fields
-$mileage = get_post_meta(get_the_ID(), 'mileage', true);
-$condition = get_post_meta(get_the_ID(), 'condition', true);
-$price = get_post_meta(get_the_ID(), 'price', true);
-$demand_price = get_post_meta(get_the_ID(), 'demand_price', true);
-$owner_name = get_post_meta(get_the_ID(), 'owner_name', true);
-$owner_phone = get_post_meta(get_the_ID(), 'owner_phone', true);
-
-// Get how long ago the car was added
-$posted_time = get_the_date('Y-m-d H:i:s');
-$time_ago = Carbon::parse($posted_time)->diffForHumans();
-?>
-
-<div class="container mx-auto px-4 py-10">
-    <?php if (have_posts()) : while (have_posts()) : the_post(); ?>
-        <div class="max-w-3xl mx-auto bg-white rounded-xl shadow-lg overflow-hidden">
-            <?php if (has_post_thumbnail()) : ?>
-                <img class="w-full h-64 object-cover" src="<?php the_post_thumbnail_url('large'); ?>" alt="<?php the_title(); ?>">
-            <?php endif; ?>
-
-            <div class="p-6 space-y-4">
-                <h1 class="text-3xl font-bold"><?php the_title(); ?></h1>
-
-                <div class="text-gray-600 text-sm">Posted: <?= esc_html($time_ago); ?></div>
-
-                <div class="space-y-1 text-lg">
-                    <p><strong>Mileage:</strong> <?= esc_html($mileage); ?></p>
-                    <p><strong>Condition:</strong> <?= esc_html($condition); ?></p>
-                    <p><strong>Price:</strong> Rs. <?= esc_html($price); ?></p>
-                    <p><strong>Demand Price:</strong> Rs. <?= esc_html($demand_price); ?></p>
-                    <p><strong>Owner Name:</strong> <?= esc_html($owner_name); ?></p>
-                    <p><strong>Owner Phone:</strong> <?= esc_html($owner_phone); ?></p>
-                </div>
-            </div>
-        </div>
-    <?php endwhile; endif; ?>
+        <a href="?book_car_id=<?php echo get_the_ID(); ?>" class="button">Book This Car</a>
+    <?php endwhile; ?>
 </div>
 
 <?php get_footer(); ?>
