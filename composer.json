@@ -1,0 +1,10 @@
+{
+  "autoload": {
+    "psr-4": {
+      "CarShowroom\\": "src/"
+    }
+  },
+  "require": {
+    "nesbot/carbon": "^2.0"
+  }
+}
