@@ -1,34 +1,30 @@
-document.addEventListener('DOMContentLoaded', function () {
-  const bookButton = document.querySelector('.book-car-btn');
+jQuery(document).ready(function ($) {
+    $('.book-this-car-btn').on('click', function (e) {
+        e.preventDefault();
 
-  if (bookButton) {
-    bookButton.addEventListener('click', function () {
-      const carId = this.dataset.carId;
+        const carId = $(this).data('car-id');
+        if (!carId) return;
 
-      if (!confirm("Are you sure you want to book this car?")) return;
+        if (!confirm('Do you want to book this car?')) return;
 
-      fetch(carBooking.ajax_url, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        body: new URLSearchParams({
-          action: 'book_car',
-          car_id: carId,
-        })
-      })
-      .then(res => res.json())
-      .then(data => {
-        if (data.success) {
-          window.location.href = data.redirect_url;
-        } else {
-          alert('Booking failed: ' + data.message);
-          console.error(data);
-        }
-      })
-      .catch(err => {
-        console.error('AJAX Error:', err);
-      });
+        $.ajax({
+            url: carBookingData.ajax_url,
+            method: 'POST',
+            data: {
+                action: 'book_this_car',
+                car_id: carId,
+                _ajax_nonce: carBookingData.nonce
+            },
+            success: function (res) {
+                if (res.success) {
+                    window.location.href = res.data.cart_url;
+                } else {
+                    alert('Booking failed: ' + res.data);
+                }
+            },
+            error: function () {
+                alert('AJAX error.');
+            }
+        });
     });
-  }
 });

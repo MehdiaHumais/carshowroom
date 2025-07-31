@@ -6,7 +6,6 @@
  * Author: Mehdia Humais
  */
 
-
 require_once __DIR__ . '/vendor/autoload.php';
 
 use CarShowroom\Init;
