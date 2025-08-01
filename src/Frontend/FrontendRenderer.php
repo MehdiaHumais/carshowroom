@@ -22,9 +22,10 @@ class FrontendRenderer {
 
             wp_localize_script('car-booking-script', 'carBookingData', [
                 'ajax_url' => admin_url('admin-ajax.php'),
-                'cart_url' => wc_get_cart_url(),
                 'nonce'    => wp_create_nonce('book_car_nonce'),
             ]);
+
+
 
             // Minimal cart styling (can be moved to a CSS file)
             add_action('wp_head', function () {
