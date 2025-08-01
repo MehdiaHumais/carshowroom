@@ -1,17 +1,26 @@
 <?php
 /**
  * Plugin Name: Car Showroom Plugin
+<<<<<<< HEAD
  * Description: Manage and display cars with REST API and WooCommerce integration.
  * Version: 1.1
  * Author: Mehdia Humais
  */
 
 if (!defined('ABSPATH')) exit;
+=======
+ * Description: Showroom management with WooCommerce booking.
+ * Version: 1.0
+ * Author: Mehdia Humais
+ */
+
+>>>>>>> 8a47fa6 (push of car showroom error)
 
 require_once __DIR__ . '/vendor/autoload.php';
 
 use CarShowroom\Init;
 
+<<<<<<< HEAD
 add_action('after_setup_theme', function () {
     add_theme_support('post-thumbnails');
 });
@@ -58,3 +67,8 @@ function carshowroom_display_car_meta($item_data, $cart_item) {
     return $item_data;
 }
 add_filter('woocommerce_get_item_data', 'carshowroom_display_car_meta', 10, 2);
+=======
+add_action('plugins_loaded', function () {
+    Init::register();
+});
+>>>>>>> 8a47fa6 (push of car showroom error)

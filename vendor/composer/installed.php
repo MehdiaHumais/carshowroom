@@ -1,6 +1,10 @@
 <?php return array(
     'root' => array(
+<<<<<<< HEAD
         'name' => 'mehdia/car-showroom-plugin',
+=======
+        'name' => '__root__',
+>>>>>>> 8a47fa6 (push of car showroom error)
         'pretty_version' => '1.0.0+no-version-set',
         'version' => '1.0.0.0',
         'reference' => null,
@@ -10,6 +14,18 @@
         'dev' => true,
     ),
     'versions' => array(
+<<<<<<< HEAD
+=======
+        '__root__' => array(
+            'pretty_version' => '1.0.0+no-version-set',
+            'version' => '1.0.0.0',
+            'reference' => null,
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../../',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+>>>>>>> 8a47fa6 (push of car showroom error)
         'carbonphp/carbon-doctrine-types' => array(
             'pretty_version' => '2.1.0',
             'version' => '2.1.0.0',
@@ -19,6 +35,7 @@
             'aliases' => array(),
             'dev_requirement' => false,
         ),
+<<<<<<< HEAD
         'mehdia/car-showroom-plugin' => array(
             'pretty_version' => '1.0.0+no-version-set',
             'version' => '1.0.0.0',
@@ -28,6 +45,8 @@
             'aliases' => array(),
             'dev_requirement' => false,
         ),
+=======
+>>>>>>> 8a47fa6 (push of car showroom error)
         'nesbot/carbon' => array(
             'pretty_version' => '2.73.0',
             'version' => '2.73.0.0',

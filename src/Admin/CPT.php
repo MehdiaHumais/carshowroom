@@ -2,6 +2,7 @@
 
 namespace CarShowroom\Admin;
 
+<<<<<<< HEAD
 if (!class_exists('CarShowroom\Admin\CPT')) {
     class CPT {
         public function __construct() {
@@ -35,5 +36,20 @@ if (!class_exists('CarShowroom\Admin\CPT')) {
 
             register_post_type('car', $args);
         }
+=======
+class CPT {
+    public function register() {
+        add_action('init', function () {
+            register_post_type('car', [
+                'label' => 'Cars',
+                'public' => true,
+                'menu_icon' => 'dashicons-car',
+                'supports' => ['title', 'editor', 'thumbnail'],
+                'has_archive' => true,
+                'rewrite' => ['slug' => 'cars'],
+                'show_in_rest' => true,
+            ]);
+        });
+>>>>>>> 8a47fa6 (push of car showroom error)
     }
 }
