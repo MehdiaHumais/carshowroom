@@ -1,8 +1,5 @@
 {
-<<<<<<< HEAD
   "name": "mehdia/car-showroom-plugin",
-=======
->>>>>>> 8a47fa6 (push of car showroom error)
   "autoload": {
     "psr-4": {
       "CarShowroom\\": "src/"

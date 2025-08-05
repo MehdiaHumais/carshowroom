@@ -1,74 +1,43 @@
 <?php
 /**
  * Plugin Name: Car Showroom Plugin
-<<<<<<< HEAD
  * Description: Manage and display cars with REST API and WooCommerce integration.
- * Version: 1.1
+ * Version: 1.2
  * Author: Mehdia Humais
  */
 
-if (!defined('ABSPATH')) exit;
-=======
- * Description: Showroom management with WooCommerce booking.
- * Version: 1.0
- * Author: Mehdia Humais
- */
-
->>>>>>> 8a47fa6 (push of car showroom error)
-
-require_once __DIR__ . '/vendor/autoload.php';
-
-use CarShowroom\Init;
-
-<<<<<<< HEAD
-add_action('after_setup_theme', function () {
-    add_theme_support('post-thumbnails');
-});
-
-if (class_exists('CarShowroom\Init')) {
-    Init::register();
+if (!defined('ABSPATH')) {
+    exit;
 }
 
-// WooCommerce support
-function carshowroom_add_car_booking_to_cart() {
-    if (isset($_GET['book_car_id'])) {
-        $car_id = intval($_GET['book_car_id']);
-
-        // Create a dummy WooCommerce product if not exists
-        $product_id = get_option('car_booking_virtual_product_id');
-        if (!$product_id || get_post_type($product_id) !== 'product') {
-            $product_id = wp_insert_post([
-                'post_title' => 'Car Booking',
-                'post_type' => 'product',
-                'post_status' => 'publish'
-            ]);
-            update_post_meta($product_id, '_price', 0);
-            update_post_meta($product_id, '_virtual', 'yes');
-            update_post_meta($product_id, '_sold_individually', 'yes');
-            update_option('car_booking_virtual_product_id', $product_id);
-        }
-
-        WC()->cart->add_to_cart($product_id, 1, 0, [], ['car_id' => $car_id]);
-        wp_redirect(wc_get_cart_url());
-        exit;
-    }
+// Autoload (composer)
+$autoload = __DIR__ . '/vendor/autoload.php';
+if (file_exists($autoload)) {
+    require_once $autoload;
+} else {
+    add_action('admin_notices', function () {
+        echo '<div class="notice notice-error"><p>Composer autoloader missing. Run <code>composer install</code>.</p></div>';
+    });
 }
-add_action('template_redirect', 'carshowroom_add_car_booking_to_cart');
 
-// Show car ID in cart and checkout
-function carshowroom_display_car_meta($item_data, $cart_item) {
-    if (isset($cart_item['car_id'])) {
-        $car_id = $cart_item['car_id'];
-        $item_data[] = [
-            'name' => 'Car Booked',
-            'value' => get_the_title($car_id)
-        ];
-    }
-    return $item_data;
-}
-add_filter('woocommerce_get_item_data', 'carshowroom_display_car_meta', 10, 2);
-=======
+// Init registration
 add_action('plugins_loaded', function () {
-    Init::register();
+    if (class_exists(\CarShowroom\Init::class)) {
+        \CarShowroom\Init::register();
+    }
 });
->>>>>>> 8a47fa6 (push of car showroom error)
+
+// Flush rewrite rules on activation / deactivation to avoid 404s
+register_activation_hook(__FILE__, function () {
+    if (class_exists(\CarShowroom\CPT\CarPostType::class)) {
+        // Ensure registration runs so rewrite rules exist
+        (new \CarShowroom\CPT\CarPostType())->register();
+        // Trigger the init hook manually before flushing (since activation runs before normal init)
+        do_action('init');
+    }
+    flush_rewrite_rules();
+});
+
+register_deactivation_hook(__FILE__, function () {
+    flush_rewrite_rules();
+});
